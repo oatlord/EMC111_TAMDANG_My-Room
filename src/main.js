@@ -78,9 +78,21 @@ function createPillow() {
 	scene.add(pillow);
 }
 
+function createDesk() {
+	const deskMaterial = createMaterial(0x9b8678);
+	const deskBase = new THREE.Mesh(new THREE.BoxGeometry(7,5, 1), deskMaterial);
+
+	deskBase.rotation.x = horizontalRotation;
+
+	// deskBase.position.set();
+
+	scene.add(deskBase);
+}
+
 function animate() {
 	createRoom();
 	createBed();
+	createDesk();
 	renderer.render( scene, camera );
 }
 renderer.setAnimationLoop( animate );
