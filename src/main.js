@@ -9,7 +9,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // e7e9fe code for color i want later
-const light = new THREE.DirectionalLight(0xFFFFFF, 1);
+const light = new THREE.DirectionalLight(0xffffff, 2.5);
 light.position.set(5, 15, 5).normalize();
 scene.add(light);
 
@@ -20,7 +20,7 @@ function createMaterial(color) {
 }
 
 function createRoom() {
-	const roomMaterial = createMaterial(0xffffff);
+	const roomMaterial = createMaterial(0x333973);
 
 	const floorGeometry = new THREE.PlaneGeometry(20, 20);
 	const floor = new THREE.Mesh(floorGeometry, roomMaterial);
@@ -38,7 +38,7 @@ function createRoom() {
 
 function createBed() {
 	const bedGeometry = new THREE.BoxGeometry(10,5,1);
-	const bedMaterial = createMaterial(0xffffff);
+	const bedMaterial = createMaterial(0x343434);
 	const bedFrame = new THREE.Mesh(bedGeometry,bedMaterial);
 
 	const bedLegGeometry = new THREE.BoxGeometry(1,2,1);
@@ -79,20 +79,106 @@ function createPillow() {
 }
 
 function createDesk() {
-	const deskMaterial = createMaterial(0x9b8678);
-	const deskBase = new THREE.Mesh(new THREE.BoxGeometry(7,5, 1), deskMaterial);
+	const deskMaterial = createMaterial(0x815e46);
+
+	const deskBase = new THREE.Mesh(new THREE.BoxGeometry(7,5,1), deskMaterial);
+	const deskLeg1 = new THREE.Mesh(new THREE.BoxGeometry(1,3,1), deskMaterial);
+	const deskLeg2 = deskLeg1.clone();
+	const deskLeg3 = deskLeg1.clone();
 
 	deskBase.rotation.x = horizontalRotation;
 
-	// deskBase.position.set();
+	deskBase.position.set(5,2,-8);
+	deskLeg1.position.set(8,0,-9);
+	deskLeg2.position.set(8,0,-6);
+	deskLeg3.position.set(2.3,0,-6);
 
 	scene.add(deskBase);
+	scene.add(deskLeg1);
+	scene.add(deskLeg2);
+	scene.add(deskLeg3);
+}
+
+function createComputer() {
+	const pcMaterial = createMaterial(0x343434);
+
+	const pcBase = new THREE.Mesh(new THREE.BoxGeometry(5,3,0.2), pcMaterial);
+	const keyboard = new THREE.Mesh(new THREE.BoxGeometry(4,2,0.1), pcMaterial);
+	const mouse = new THREE.Mesh(new THREE.BoxGeometry(0.7,1,0.5), pcMaterial);
+
+	keyboard.rotation.x = horizontalRotation;
+	mouse.rotation.x = horizontalRotation;
+
+	pcBase.position.set(5,4,-9);
+	keyboard.position.set(4.6,2.5,-7.5);
+	mouse.position.set(7.5,2.4,-7.5);
+
+	scene.add(pcBase);
+	scene.add(keyboard);
+	scene.add(mouse);
+}
+
+function createCabinet() {
+	const cabinetMaterial = createMaterial(0x815e46);
+
+	const cabinet1 = new THREE.Mesh(new THREE.BoxGeometry(3,18,4), cabinetMaterial);
+	const cabinet2 = cabinet1.clone();
+
+	cabinet1.position.set(-8,0,-6.5);
+	cabinet2.position.set(-8,0,-2.3);
+
+	scene.add(cabinet1);
+	scene.add(cabinet2);
+}
+
+function createChair() {
+	const chairMaterial = createMaterial(0x525252);
+
+	const chairBase = new THREE.Mesh(new THREE.BoxGeometry(2,3.5,2), chairMaterial);
+	const chairHead = new THREE.Mesh(new THREE.BoxGeometry(2,2,0.5),chairMaterial);
+
+	chairBase.position.set(5,0,-4);
+	chairHead.position.set(6,4,-1.5);
+
+	scene.add(chairBase);
+	scene.add(chairHead);
+}
+
+function createWindows() {
+	const windowMaterial = createMaterial(0xd6f7fc);
+
+	const window1 = new THREE.Mesh(new THREE.BoxGeometry(6,3,0.2),windowMaterial);
+	const window2 = window1.clone();
+
+	window2.rotation.y = horizontalRotation;
+
+	window1.position.set(-2,6,-10);
+	window2.position.set(-10,6,5);
+
+	scene.add(window1);
+	scene.add(window2);
+}
+
+function createMat() {
+	const matMaterial = createMaterial(0xea9a40);
+
+	const mat = new THREE.Mesh(new THREE.CircleGeometry(5.0), matMaterial);
+
+	mat.rotation.x = horizontalRotation;
+	mat.position.set(2,0.1,4.3);
+
+	scene.add(mat);
 }
 
 function animate() {
 	createRoom();
 	createBed();
 	createDesk();
+	createComputer();
+	createCabinet();
+	createChair();
+	createWindows();
+	createMat();
 	renderer.render( scene, camera );
 }
 renderer.setAnimationLoop( animate );
